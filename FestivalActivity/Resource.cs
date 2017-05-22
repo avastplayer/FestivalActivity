@@ -46,6 +46,17 @@ namespace FestivalActivity
             InitializeResource();
         }
 
+        public void FreshConfig()
+        {
+            InitializeConfig();
+        }
+
+        public void WriteToExcel()
+        {
+            ExcelHelper excelHelper = new ExcelHelper(FilePath);
+            excelHelper.DataTableToExcel(ExcelDataTable,"sheet1");
+        }
+
         private static readonly Dictionary<string, Type> FieldMap = new Dictionary<string, Type>
         {
             ["id"] = typeof(int),
@@ -89,6 +100,8 @@ namespace FestivalActivity
 
             ExcelHelper excelHelper = new ExcelHelper(FilePath);
             ExcelDataTable = excelHelper.ExcelToDataTable("Sheet1", CreateTempletDataTable());
+
+            ExcelDataItemsSource = ExcelDataTable.DefaultView;
         }
 
         private static Type GeFieldType(string fieldName) => FieldMap[fieldName];
@@ -108,7 +121,7 @@ namespace FestivalActivity
 
         private void InitializeResource()
         {
-            ExcelDataItemsSource = ExcelDataTable.DefaultView;
+            
             MainBackSource = new BitmapSource[9];
             CommonCaseSource = new BitmapSource[9];
             BackImageSource = new BitmapSource[9];

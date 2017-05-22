@@ -25,6 +25,7 @@ namespace FestivalActivity
         public Cell[] ActivityCell { get; private set; }
         private readonly Resource _resource = new Resource(false);
         private List<int> _selectRow = new List<int>();
+        private int selectRow = 0;
 
         public MainWindow()
         {
@@ -113,7 +114,8 @@ namespace FestivalActivity
                 //绑定点击事件
                 ActivityCell[i].MouseUp += ActivityCell_MouseUp;
                 //设置第一个选中的cell说明
-                SetInfoMain(_selectRow[0]);
+                selectRow = _selectRow[0];
+                SetInfoMain(selectRow);
             }
         }
 
@@ -122,7 +124,8 @@ namespace FestivalActivity
             for (int i = 0; i < ActivityCell.Length; i++)
             {
                 if (!ActivityCell[i].Equals(sender)) continue;
-                SetInfoMain(_selectRow[i]);
+                selectRow = _selectRow[i];
+                SetInfoMain(selectRow);
             }
 
             InfoCell.Visibility = Visibility.Visible;
@@ -167,6 +170,23 @@ namespace FestivalActivity
         private void CloseButton1_OnMouseUp(object sender, MouseButtonEventArgs e)
         {
             InfoCell.Visibility = Visibility.Hidden;
+        }
+
+        private void KeyUpWindow_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyStates == Keyboard.GetKeyStates(Key.F5))
+            {
+                _resource.FreshConfig();
+                ExcelData.ItemsSource = _resource.ExcelDataItemsSource;
+                SetInfoMain(selectRow);
+                Message.Text = "刷新完成！";
+            }
+            if (e.KeyStates == Keyboard.GetKeyStates(Key.LeftCtrl)&& e.KeyStates == Keyboard.GetKeyStates(Key.S))
+            {
+                _resource.WriteToExcel();
+                Message.Text = "保存完成！";
+            }
+           
         }
     }
 }

@@ -5,19 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="节日活动入口"
-        Height="680" Width="1410">
-    <Grid Margin="0,0,0,42">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0*" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Canvas Margin="1,10,0,64" Grid.Column="1">
+        Height="680" Width="1410"
+        PreviewKeyDown="KeyUpWindow_PreviewKeyDown">
+        
+    <Canvas>
+        <Canvas>
             <DataGrid Canvas.Left="10" Canvas.Top="10" Height="608" Width="405"  Name="ExcelData" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeColumns="False" SelectionUnit="FullRow"  SelectionChanged="ExcelData_OnSelectionChanged">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="auto" Binding="{Binding Path=id, Mode=TwoWay}" Header="id" />
-                    <DataGridTextColumn Width="auto" Binding="{Binding Path=任务名称, Mode=TwoWay}" Header="任务名称" />
-                    <DataGridTextColumn Width="*" Binding="{Binding Path=开启显示时间, Mode=TwoWay}" Header="开启显示时间" />
-                    <DataGridTextColumn Width="*" Binding="{Binding Path=结束显示时间, Mode=TwoWay}" Header="结束显示时间" />
+                    <DataGridTextColumn Width="auto" Binding="{Binding Path=id, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="id" />
+                    <DataGridTextColumn Width="auto" Binding="{Binding Path=任务名称, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="任务名称" />
+                    <DataGridTextColumn Width="*" Binding="{Binding Path=开启显示时间, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="开启显示时间" />
+                    <DataGridTextColumn Width="*" Binding="{Binding Path=结束显示时间, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="结束显示时间" />
                 </DataGrid.Columns>
             </DataGrid>
             <Canvas Height="608" Canvas.Left="450" Canvas.Top="10" Width="933" Name="FrameWindow">
@@ -79,5 +77,8 @@
                 </ScrollViewer>
             </Canvas>
         </Canvas>
-    </Grid>
+        <StatusBar Canvas.Bottom="0" Canvas.Left="10" Height="20">
+            <TextBlock Name="Message"/>
+        </StatusBar>
+    </Canvas>
 </Window>
