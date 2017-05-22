@@ -3,10 +3,81 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FestivalActivity"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="节日活动入口"
+        Height="680" Width="1410">
+    <Grid Margin="0,0,0,42">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Canvas Margin="1,10,0,64" Grid.Column="1">
+            <DataGrid Canvas.Left="10" Canvas.Top="10" Height="608" Width="405"  Name="ExcelData" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeColumns="False" SelectionUnit="FullRow"  SelectionChanged="ExcelData_OnSelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="auto" Binding="{Binding Path=id, Mode=TwoWay}" Header="id" />
+                    <DataGridTextColumn Width="auto" Binding="{Binding Path=任务名称, Mode=TwoWay}" Header="任务名称" />
+                    <DataGridTextColumn Width="*" Binding="{Binding Path=开启显示时间, Mode=TwoWay}" Header="开启显示时间" />
+                    <DataGridTextColumn Width="*" Binding="{Binding Path=结束显示时间, Mode=TwoWay}" Header="结束显示时间" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Canvas Height="608" Canvas.Left="450" Canvas.Top="10" Width="933" Name="FrameWindow">
+                <Image Height="150" Canvas.Left="0" Canvas.Top="0" Width="150" Stretch="Fill"  Name="MainBack1" />
+                <Image Height="150" Canvas.Right="0" Canvas.Top="0" Width="150" Stretch="Fill"  Name="MainBack3" />
+                <Image Height="150" Canvas.Left="0" Canvas.Bottom="0" Width="150" Stretch="Fill"  Name="MainBack7" />
+                <Image Height="150" Canvas.Right="0" Canvas.Bottom="0" Width="150" Stretch="Fill"  Name="MainBack9" />
+                <Image Height="308" Canvas.Left="0" Canvas.Top="150" Width="150" Stretch="Fill"  Name="MainBack4" />
+                <Image Height="308" Canvas.Right="0" Canvas.Top="150" Width="150" Stretch="Fill"  Name="MainBack6" />
+                <Image Height="150" Canvas.Left="150" Canvas.Top="0" Width="633" Stretch="Fill"  Name="MainBack2" />
+                <Image Height="150" Canvas.Left="150" Canvas.Bottom="0" Width="633" Stretch="Fill"  Name="MainBack8" />
+                <Image Height="308" Canvas.Left="150" Canvas.Top="150" Width="633" Stretch="Fill"  Name="MainBack5" />
+                <Image Height="100" Canvas.Right="-20" Canvas.Top="-30" Width="100" Stretch="Fill" Name="CloseButton" />
+                <Image Height="62" Canvas.Left="26" Canvas.Top="22" Width="66" Stretch="Fill" Name="TopLeftCorner" />
+                <Image Height="62" Canvas.Right="26" Canvas.Top="22" Width="66" Stretch="Fill" Name="TopRightCorner" />
+                <Image Height="62" Canvas.Left="26" Canvas.Bottom="22" Width="66" Stretch="Fill" Name="BottomLeftCorner" />
+                <Image Height="62" Canvas.Right="26" Canvas.Bottom="22" Width="66" Stretch="Fill" Name="BottomRightCorner" />
+                <Image Height="508" Canvas.Left="-21" Canvas.Top="1" Width="55" Stretch="Fill" Name="Pattern" />
+                <TextBlock Height="30" Canvas.Left="-10" Canvas.Top="140" Width="30" Text="活" Foreground="#FF2E4D73" FontFamily="隶书" FontSize="26" />
+                <TextBlock Height="30" Canvas.Left="-10" Canvas.Top="180" Width="30" Text="动" Foreground="#FF2E4D73" FontFamily="隶书" FontSize="26" />
+                <Canvas HorizontalAlignment="Right" Height="494" VerticalAlignment="Top" Width="818" Canvas.Left="57.5" Canvas.Top="57" ClipToBounds="True">
+                    <Image Height="26" Canvas.Left="0" Canvas.Top="0" Width="26" Stretch="Fill"  Name="CommonCase1" />
+                    <Image Height="26" Canvas.Right="0" Canvas.Top="0" Width="26" Stretch="Fill"  Name="CommonCase3" />
+                    <Image Height="26" Canvas.Left="0" Canvas.Bottom="0" Width="26" Stretch="Fill"  Name="CommonCase7" />
+                    <Image Height="26" Canvas.Right="0" Canvas.Bottom="0" Width="26" Stretch="Fill"  Name="CommonCase9" />
+                    <Image Height="442" Canvas.Left="0" Canvas.Top="26" Width="26" Stretch="Fill"  Name="CommonCase4" />
+                    <Image Height="442" Canvas.Right="0" Canvas.Top="26" Width="26" Stretch="Fill"  Name="CommonCase6" />
+                    <Image Height="26" Canvas.Left="26" Canvas.Top="0" Width="766" Stretch="Fill"  Name="CommonCase2" />
+                    <Image Height="26" Canvas.Left="26" Canvas.Bottom="0" Width="766" Stretch="Fill"  Name="CommonCase8" />
+                    <Image Height="442" Canvas.Left="26" Canvas.Top="26" Width="766" Stretch="Fill"  Name="CommonCase5" />
+                    <ScrollViewer Height="484" Canvas.Top="5" Width="818" VerticalScrollBarVisibility="Hidden"  PanningMode="VerticalOnly">
+                        <Canvas Height="484" Width="818" Name="ScrollPane" />
+                    </ScrollViewer>
+                </Canvas>
+            </Canvas>
+            <Canvas Height="217" Canvas.Left="450" Canvas.Top="400" Width="933" Name="InfoCell" Visibility="Hidden">
+                <Image Height="30" Canvas.Left="0" Canvas.Top="0" Width="30" Stretch="Fill"  Name="CommonCase7_1" />
+                <Image Height="30" Canvas.Right="0" Canvas.Top="0" Width="30" Stretch="Fill"  Name="CommonCase7_3" />
+                <Image Height="30" Canvas.Left="0" Canvas.Bottom="0" Width="30" Stretch="Fill"  Name="CommonCase7_7" />
+                <Image Height="30" Canvas.Right="0" Canvas.Bottom="0" Width="30" Stretch="Fill"  Name="CommonCase7_9" />
+                <Image Height="157" Canvas.Left="0" Canvas.Top="30" Width="30" Stretch="Fill"  Name="CommonCase7_4" />
+                <Image Height="157" Canvas.Right="0" Canvas.Top="30" Width="30" Stretch="Fill"  Name="CommonCase7_6" />
+                <Image Height="30" Canvas.Left="30" Canvas.Top="0" Width="873" Stretch="Fill"  Name="CommonCase7_2" />
+                <Image Height="30" Canvas.Left="30" Canvas.Bottom="0" Width="873" Stretch="Fill"  Name="CommonCase7_8" />
+                <Image Height="157" Canvas.Left="30" Canvas.Top="30" Width="873" Stretch="Fill"  Name="CommonCase7_5" />
+                <Image Height="30" Canvas.Left="0" Canvas.Top="0" Width="30" Stretch="Fill"  Name="CommonCase_1" />
+                <Image Height="30" Canvas.Right="0" Canvas.Top="0" Width="30" Stretch="Fill"  Name="CommonCase_3" />
+                <Image Height="30" Canvas.Left="0" Canvas.Bottom="0" Width="30" Stretch="Fill"  Name="CommonCase_7" />
+                <Image Height="30" Canvas.Right="0" Canvas.Bottom="0" Width="30" Stretch="Fill"  Name="CommonCase_9" />
+                <Image Height="157" Canvas.Left="0" Canvas.Top="30" Width="30" Stretch="Fill"  Name="CommonCase_4" />
+                <Image Height="157" Canvas.Right="0" Canvas.Top="30" Width="30" Stretch="Fill"  Name="CommonCase_6" />
+                <Image Height="30" Canvas.Left="30" Canvas.Top="0" Width="873" Stretch="Fill"  Name="CommonCase_2" />
+                <Image Height="30" Canvas.Left="30" Canvas.Bottom="0" Width="873" Stretch="Fill"  Name="CommonCase_8" />
+                <Image Height="157" Canvas.Left="30" Canvas.Top="30" Width="873" Stretch="Fill"  Name="CommonCase_5" />
+                <Image Height="284" Canvas.Left="11" Canvas.Top="-73" Width="232" Stretch="Fill" Name="LiMoChouPic" />
+                <Image Height="100" Canvas.Left="869" Canvas.Top="-31" Width="100" Stretch="Fill" Name="CloseButton1" MouseUp="CloseButton1_OnMouseUp" />
+                <ScrollViewer Canvas.Left="279" Canvas.Top="8" Width="635"  Height="198" VerticalScrollBarVisibility="Hidden"  PanningMode="VerticalOnly">
+                    <TextBlock  Margin="15,0,15,0" Name="InfoMain"  FontSize="21" FontFamily="SimHei" TextWrapping="WrapWithOverflow" />
+                </ScrollViewer>
+            </Canvas>
+        </Canvas>
     </Grid>
 </Window>

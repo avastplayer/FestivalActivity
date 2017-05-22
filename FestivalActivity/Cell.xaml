@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="FestivalActivity.Cell"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="100" d:DesignWidth="400">
+    <Grid>
+        <Canvas HorizontalAlignment="Right" Height="100" VerticalAlignment="Top" Width="400" Name="Back">
+            <Image Height="33" Canvas.Left="0" Canvas.Top="0" Width="33" Stretch="Fill"  Name="BackImage1" />
+            <Image Height="33" Canvas.Left="33" Canvas.Top="0" Width="334" Stretch="Fill"  Name="BackImage2" />
+            <Image Height="33" Canvas.Left="367" Canvas.Top="0" Width="33" Stretch="Fill"  Name="BackImage3" />
+            <Image Height="34" Canvas.Left="0" Canvas.Top="33" Width="33" Stretch="Fill"  Name="BackImage4" />
+            <Image Height="34" Canvas.Left="33" Canvas.Top="33" Width="334" Stretch="Fill"  Name="BackImage5" />
+            <Image Height="34" Canvas.Left="367" Canvas.Top="33" Width="33" Stretch="Fill"  Name="BackImage6" />
+            <Image Height="33" Canvas.Left="0" Canvas.Top="67" Width="33" Stretch="Fill"  Name="BackImage7" />
+            <Image Height="33" Canvas.Left="33" Canvas.Top="67" Width="334" Stretch="Fill"  Name="BackImage8" />
+            <Image Height="33" Canvas.Left="367" Canvas.Top="67" Width="33" Stretch="Fill"  Name="BackImage9" />
+            <Image Height="70" Canvas.Left="15" Canvas.Top="15" Width="70" Name="IconImageBorder" />
+            <Image Height="57" Canvas.Left="22" Canvas.Top="22" Width="57" Name="IconImage" />
+            <Image Height="50" Canvas.Left="0" Canvas.Top="0" Width="50" Name="CornerImage" />
+            <TextBlock Height="32" Canvas.Left="92" TextWrapping="Wrap" Canvas.Top="20" Width="228" Name="TaskName"  FontSize="22" Foreground="#FF2E4D73" FontFamily="SimHei" />
+            <TextBlock Height="25" Canvas.Left="92" TextWrapping="Wrap" Canvas.Top="56" Width="218" Name="Time"  FontSize="17" Text="04月20日-04月26日" Foreground="#FF38648E" FontFamily="SimHei" />
+            <Image Height="50" Canvas.Left="300" Canvas.Top="25" Width="93" Stretch="Fill" Name="Button" />
+            <TextBlock Height="24" Canvas.Left="330" TextWrapping="Wrap" Canvas.Top="39" Width="45" Name="ButtonTxt"  FontSize="17" Text="前往" Foreground="#FFFFFFFF" FontFamily="SimHei" />
+        </Canvas>
+    </Grid>
+</UserControl>
