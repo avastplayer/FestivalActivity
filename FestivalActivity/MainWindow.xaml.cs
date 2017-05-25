@@ -25,7 +25,7 @@ namespace FestivalActivity
         public Cell[] ActivityCell { get; private set; }
         private readonly Resource _resource = new Resource(false);
         private List<int> _selectRow = new List<int>();
-        private int selectRow = 0;
+        private int selectRow;
 
         public MainWindow()
         {
@@ -181,12 +181,11 @@ namespace FestivalActivity
                 SetInfoMain(selectRow);
                 Message.Text = "刷新完成！";
             }
-            if (e.KeyStates == Keyboard.GetKeyStates(Key.LeftCtrl)&& e.KeyStates == Keyboard.GetKeyStates(Key.S))
+            if (e.KeyStates == Keyboard.GetKeyStates(Key.LeftCtrl) && e.KeyStates == Keyboard.GetKeyStates(Key.S))
             {
                 _resource.WriteToExcel();
                 Message.Text = "保存完成！";
             }
-           
         }
     }
 }

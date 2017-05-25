@@ -54,7 +54,7 @@ namespace FestivalActivity
         public void WriteToExcel()
         {
             ExcelHelper excelHelper = new ExcelHelper(FilePath);
-            excelHelper.DataTableToExcel(ExcelDataTable,"sheet1");
+            excelHelper.DataTableToExcel(ExcelDataTable, "sheet1");
         }
 
         private static readonly Dictionary<string, Type> FieldMap = new Dictionary<string, Type>
@@ -121,7 +121,6 @@ namespace FestivalActivity
 
         private void InitializeResource()
         {
-            
             MainBackSource = new BitmapSource[9];
             CommonCaseSource = new BitmapSource[9];
             BackImageSource = new BitmapSource[9];
@@ -148,7 +147,8 @@ namespace FestivalActivity
 
         public BitmapSource SetImage(string fileName, string iconName)
         {
-            string iconPath = fileName.Contains("itemicon") ? (IconPath + "\\" + "item") : (IconPath + "\\" + fileName);
+            string iconPath = GetIconPath(fileName);
+
             IconNameList = GetIconName(iconPath);
 
             //当查找到图片时
@@ -180,7 +180,8 @@ namespace FestivalActivity
 
         public BitmapSource SetImage(string fileName, string iconName, Rectangle rect)
         {
-            string iconPath = fileName.Contains("itemicon") ? (IconPath + "\\" + "item") : (IconPath + "\\" + fileName);
+            string iconPath = GetIconPath(fileName);
+
             IconNameList = GetIconName(iconPath);
 
             //当查找到图片时
@@ -212,6 +213,27 @@ namespace FestivalActivity
                 IntPtr.Zero, Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions());
             return bitmapSource;
+        }
+
+        private static string GetIconPath(string fileName)
+        {
+            if (fileName.Contains("itemicon"))
+            {
+                return IconPath + "\\" + "item";
+            }
+            if (fileName.Contains("roleandmonster"))
+            {
+                return IconPath + "\\" + "大头像";
+            }
+            if (fileName.Contains("righttoppet"))
+            {
+                return IconPath + "\\" + "宠物头像";
+            }
+            if (fileName.Contains("skillicon"))
+            {
+                return IconPath + "\\" + "skill";
+            }
+            return IconPath + "\\" + fileName;
         }
 
         private static Bitmap CutImage(Image img, Rectangle rect)
