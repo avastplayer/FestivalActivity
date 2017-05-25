@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -10,7 +9,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Xml;
-using NPOI.SS.Formula.Functions;
 using Color = System.Windows.Media.Color;
 using ColorConverter = System.Windows.Media.ColorConverter;
 using Image = System.Windows.Controls.Image;
@@ -30,13 +28,13 @@ namespace FestivalActivity
         public MainWindow()
         {
             InitializeComponent();
-
             InitializeFrameWindow();
         }
 
         private void InitializeFrameWindow()
         {
-            ExcelData.ItemsSource = _resource.ExcelDataItemsSource;
+            Title0.Visibility = Visibility.Visible;
+            Title1.Visibility = Visibility.Visible;
 
             Image[] mainBack = { MainBack1, MainBack2, MainBack3, MainBack4, MainBack5, MainBack6, MainBack7, MainBack8, MainBack9 };
             Image[] commonCase = { CommonCase1, CommonCase2, CommonCase3, CommonCase4, CommonCase5, CommonCase6, CommonCase7, CommonCase8, CommonCase9 };
@@ -53,6 +51,9 @@ namespace FestivalActivity
             Pattern.Source = _resource.PatternSource;
 
             InitializeInfoCell();
+
+            if (_resource.ExcelDataTable == null) return;
+            ExcelData.ItemsSource = _resource.ExcelDataItemsSource;
         }
 
         public void InitializeInfoCell()
@@ -134,36 +135,43 @@ namespace FestivalActivity
         private void SetInfoMain(int row)
         {
             InfoMain.Inlines.Clear();
-
-            string xmlString = _resource.ExcelDataTable.Rows[row]["说明"].ToString();
-
-            XmlDocument xmldoc = new XmlDocument();
-            xmldoc.LoadXml("<root>" + xmlString + "</root>");
-
-            if (xmldoc.DocumentElement == null) return;
-            XmlNodeList xmlNodeList = xmldoc.DocumentElement.ChildNodes;
-
-            foreach (XmlNode xmlNode in xmlNodeList)
+            string activityName = _resource.ExcelDataTable.Rows[row]["任务名称"].ToString();
+            try
             {
-                switch (xmlNode.Name)
-                {
-                    case "T":
-                        if (xmlNode.Attributes["c"] != null)
-                        {
-                            string colorString = Regex.Replace(xmlNode.Attributes["c"].Value, "^ff|^FF", "#");
-                            Color color = (Color)ColorConverter.ConvertFromString(colorString);
-                            InfoMain.Inlines.Add(new Run(xmlNode.Attributes["t"].Value) { Foreground = new SolidColorBrush(color) });
-                        }
-                        else
-                        {
-                            InfoMain.Inlines.Add(new Run(xmlNode.Attributes["t"].Value));
-                        }
-                        break;
+                string xmlString = _resource.ExcelDataTable.Rows[row]["说明"].ToString();
 
-                    case "B":
-                        InfoMain.Inlines.Add(new LineBreak());
-                        break;
+                XmlDocument xmldoc = new XmlDocument();
+                xmldoc.LoadXml("<root>" + xmlString + "</root>");
+
+                if (xmldoc.DocumentElement == null) return;
+                XmlNodeList xmlNodeList = xmldoc.DocumentElement.ChildNodes;
+
+                foreach (XmlNode xmlNode in xmlNodeList)
+                {
+                    switch (xmlNode.Name)
+                    {
+                        case "T":
+                            if (xmlNode.Attributes["c"] != null)
+                            {
+                                string colorString = Regex.Replace(xmlNode.Attributes["c"].Value, "^ff|^FF", "#");
+                                Color color = (Color)ColorConverter.ConvertFromString(colorString);
+                                InfoMain.Inlines.Add(new Run(xmlNode.Attributes["t"].Value) { Foreground = new SolidColorBrush(color) });
+                            }
+                            else
+                            {
+                                InfoMain.Inlines.Add(new Run(xmlNode.Attributes["t"].Value));
+                            }
+                            break;
+
+                        case "B":
+                            InfoMain.Inlines.Add(new LineBreak());
+                            break;
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(string.Format("“{0}”活动说明配置有错！\n\n", activityName) + e.Message);
             }
         }
 
@@ -177,14 +185,12 @@ namespace FestivalActivity
             if (e.KeyStates == Keyboard.GetKeyStates(Key.F5))
             {
                 _resource.FreshConfig();
+
+                if (_resource.ExcelDataTable == null) return;
                 ExcelData.ItemsSource = _resource.ExcelDataItemsSource;
+
                 SetInfoMain(selectRow);
                 Message.Text = "刷新完成！";
-            }
-            if (e.KeyStates == Keyboard.GetKeyStates(Key.LeftCtrl) && e.KeyStates == Keyboard.GetKeyStates(Key.S))
-            {
-                _resource.WriteToExcel();
-                Message.Text = "保存完成！";
             }
         }
     }

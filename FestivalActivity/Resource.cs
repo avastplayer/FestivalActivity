@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using System.Xml;
 
 namespace FestivalActivity
 {
@@ -42,19 +41,22 @@ namespace FestivalActivity
         public Resource(bool isLoaded)
         {
             if (isLoaded) return;
-            InitializeConfig();
-            InitializeResource();
+            if (IsIconConfiguredCorrect())
+            {
+                InitializeResource();
+            }
+            if (IsFileConfiguredCorrect())
+            {
+                InitializeConfig();
+            }
         }
 
         public void FreshConfig()
         {
-            InitializeConfig();
-        }
-
-        public void WriteToExcel()
-        {
-            ExcelHelper excelHelper = new ExcelHelper(FilePath);
-            excelHelper.DataTableToExcel(ExcelDataTable, "sheet1");
+            if (IsFileConfiguredCorrect())
+            {
+                InitializeConfig();
+            }
         }
 
         private static readonly Dictionary<string, Type> FieldMap = new Dictionary<string, Type>
@@ -79,44 +81,34 @@ namespace FestivalActivity
             ["排序"] = typeof(int)
         };
 
-        private void InitializeConfig()
+        private bool IsIconConfiguredCorrect()
         {
-            FilePath = GetAppConfig(nameof(FilePath));
             IconPath = GetAppConfig(nameof(IconPath));
 
-            if (!Directory.Exists(IconPath))
-            {
-                MessageBox.Show($"\"{IconPath}\"未找到，请修改FestivalActivity.exe.config中的文件夹路径！");
-                return;
-            }
-
-            if (!Directory.Exists(FilePath))
-            {
-                MessageBox.Show($"\"{FilePath}\"未找到，请修改FestivalActivity.exe.config中的文件夹路径！");
-                return;
-            }
-
-            FilePath = FilePath + @"\j节日活动\c春节活动入口.xlsx";
-
-            ExcelHelper excelHelper = new ExcelHelper(FilePath);
-            ExcelDataTable = excelHelper.ExcelToDataTable("Sheet1", CreateTempletDataTable());
-
-            ExcelDataItemsSource = ExcelDataTable.DefaultView;
+            if (Directory.Exists(IconPath)) return true;
+            MessageBox.Show(string.Format("\"{0}\"未找到，请修改FestivalActivity.exe.config中的文件夹路径！", IconPath));
+            return false;
         }
 
-        private static Type GeFieldType(string fieldName) => FieldMap[fieldName];
-
-        private static DataTable CreateTempletDataTable()
+        private bool IsFileConfiguredCorrect()
         {
-            DataTable templetDataTable = new DataTable();
+            FilePath = GetAppConfig(nameof(FilePath));
 
-            foreach (string fieldName in FieldMap.Keys)
-            {
-                DataColumn column = new DataColumn(fieldName, GeFieldType(fieldName));
-                templetDataTable.Columns.Add(column);
-            }
+            if (Directory.Exists(FilePath)) return true;
+            MessageBox.Show(string.Format("\"{0}\"未找到，请修改FestivalActivity.exe.config中的文件夹路径！", FilePath));
+            return false;
+        }
 
-            return templetDataTable;
+        private void InitializeConfig()
+        {
+            string fileFullPath = FilePath + @"\j节日活动\c春节活动入口.xlsx";
+
+            ExcelHelper excelHelper = new ExcelHelper(fileFullPath);
+            ExcelDataTable = excelHelper.ExcelToDataTable("Sheet1", CreateTempletDataTable());
+
+            if (ExcelDataTable == null) return;
+
+            ExcelDataItemsSource = ExcelDataTable.DefaultView;
         }
 
         private void InitializeResource()
@@ -145,9 +137,29 @@ namespace FestivalActivity
             LiMoChouSource = SetImage(@"\MainControl9", "1meinv");//InfoCell李莫愁
         }
 
+        private static Type GeFieldType(string fieldName) => FieldMap[fieldName];
+
+        private static DataTable CreateTempletDataTable()
+        {
+            DataTable templetDataTable = new DataTable();
+
+            foreach (string fieldName in FieldMap.Keys)
+            {
+                DataColumn column = new DataColumn(fieldName, GeFieldType(fieldName));
+                templetDataTable.Columns.Add(column);
+            }
+
+            return templetDataTable;
+        }
+
         public BitmapSource SetImage(string fileName, string iconName)
         {
             string iconPath = GetIconPath(fileName);
+            if (!Directory.Exists(iconPath))
+            {
+                MessageBox.Show(String.Format("{0}路径不存在！", iconPath));
+                return null;
+            }
 
             IconNameList = GetIconName(iconPath);
 
@@ -160,9 +172,15 @@ namespace FestivalActivity
                 iconName = element;
                 findIconNumer++;
             }
-            if (findIconNumer == 0) return null;
 
             string soursePath = iconPath + "\\" + iconName;
+
+            if (findIconNumer == 0)
+            {
+                MessageBox.Show(String.Format("{0}图片不存在！", soursePath));
+                return null;
+            }
+
             BitmapSource bitmapSource;
             if (iconName.Contains(".tga") || iconName.Contains(".TGA"))
             {
@@ -181,6 +199,11 @@ namespace FestivalActivity
         public BitmapSource SetImage(string fileName, string iconName, Rectangle rect)
         {
             string iconPath = GetIconPath(fileName);
+            if (!Directory.Exists(iconPath))
+            {
+                MessageBox.Show(String.Format("{0}路径不存在！", iconPath));
+                return null;
+            }
 
             IconNameList = GetIconName(iconPath);
 
@@ -193,9 +216,15 @@ namespace FestivalActivity
                 iconName = element;
                 findIconNumer++;
             }
-            if (findIconNumer == 0) return null;
 
             string soursePath = iconPath + "\\" + iconName;
+
+            if (findIconNumer == 0)
+            {
+                MessageBox.Show(String.Format("{0}图片不存在！", soursePath));
+                return null;
+            }
+
             Bitmap image;
             if (iconName.Contains(".tga") || iconName.Contains(".TGA"))
             {

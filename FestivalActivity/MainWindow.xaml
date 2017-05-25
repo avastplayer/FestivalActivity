@@ -7,10 +7,10 @@
         Title="节日活动入口"
         Height="680" Width="1410"
         PreviewKeyDown="KeyUpWindow_PreviewKeyDown">
-        
+
     <Canvas>
         <Canvas>
-            <DataGrid Canvas.Left="10" Canvas.Top="10" Height="608" Width="405"  Name="ExcelData" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeColumns="False" SelectionUnit="FullRow"  SelectionChanged="ExcelData_OnSelectionChanged">
+            <DataGrid Canvas.Left="10" Canvas.Top="10" Height="608" Width="405"  Name="ExcelData" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeColumns="False" IsReadOnly="True" SelectionUnit="FullRow"  SelectionChanged="ExcelData_OnSelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="auto" Binding="{Binding Path=id, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="id" />
                     <DataGridTextColumn Width="auto" Binding="{Binding Path=任务名称, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="任务名称" />
@@ -34,8 +34,8 @@
                 <Image Height="62" Canvas.Left="26" Canvas.Bottom="22" Width="66" Stretch="Fill" Name="BottomLeftCorner" />
                 <Image Height="62" Canvas.Right="26" Canvas.Bottom="22" Width="66" Stretch="Fill" Name="BottomRightCorner" />
                 <Image Height="508" Canvas.Left="-21" Canvas.Top="1" Width="55" Stretch="Fill" Name="Pattern" />
-                <TextBlock Height="30" Canvas.Left="-10" Canvas.Top="140" Width="30" Text="活" Foreground="#FF2E4D73" FontFamily="隶书" FontSize="26" />
-                <TextBlock Height="30" Canvas.Left="-10" Canvas.Top="180" Width="30" Text="动" Foreground="#FF2E4D73" FontFamily="隶书" FontSize="26" />
+                <TextBlock Height="30" Canvas.Left="-10" Canvas.Top="140" Width="30" Text="活" Foreground="#FF2E4D73" FontFamily="隶书" FontSize="26" Visibility="Hidden" Name="Title0" />
+                <TextBlock Height="30" Canvas.Left="-10" Canvas.Top="180" Width="30" Text="动" Foreground="#FF2E4D73" FontFamily="隶书" FontSize="26" Visibility="Hidden" Name="Title1" />
                 <Canvas HorizontalAlignment="Right" Height="494" VerticalAlignment="Top" Width="818" Canvas.Left="57.5" Canvas.Top="57" ClipToBounds="True">
                     <Image Height="26" Canvas.Left="0" Canvas.Top="0" Width="26" Stretch="Fill"  Name="CommonCase1" />
                     <Image Height="26" Canvas.Right="0" Canvas.Top="0" Width="26" Stretch="Fill"  Name="CommonCase3" />
@@ -78,7 +78,7 @@
             </Canvas>
         </Canvas>
         <StatusBar Canvas.Bottom="0" Canvas.Left="10" Height="20">
-            <TextBlock Name="Message"/>
+            <TextBlock Name="Message" />
         </StatusBar>
     </Canvas>
 </Window>
